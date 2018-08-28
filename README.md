@@ -1,2 +1,2 @@
-# tessera-driver
-Driver android app 
+# tessera-user-andriod
+Front end for the andriod app
