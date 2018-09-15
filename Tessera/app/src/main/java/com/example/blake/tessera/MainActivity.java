@@ -31,13 +31,10 @@ public class MainActivity extends AppCompatActivity {
 
        setSupportActionBar(hamburger);
 
-
-
         PrimaryDrawerItem item1 = new PrimaryDrawerItem().withIdentifier(1).withName("Home");
         PrimaryDrawerItem item2 = new PrimaryDrawerItem().withIdentifier(2).withName("Topup");
         PrimaryDrawerItem item3 = new PrimaryDrawerItem().withIdentifier(3).withName("Settings");
         PrimaryDrawerItem item4 = new PrimaryDrawerItem().withIdentifier(4).withName("Logout");
-
 
         final Drawer result = new DrawerBuilder()
                 .withActivity(this)

@@ -9,9 +9,9 @@ public interface Api {
 
     String BASE_URL = "https://dev-api.tessera-dev.haydenwoodhead.com/api/";
 
-    @POST("v1/users/authtokens/")
+    @GET("v1/drivers/authtokens/")
     Call<APIToken> loginUser(@Body LoginData ld);
 
-
-
+    @POST("v1/drivers/authtokens/")
+    Call<APIToken> driverList(@Body GetDriverList ld);
 }

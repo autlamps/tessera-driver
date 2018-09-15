@@ -37,14 +37,6 @@ public class Login extends AppCompatActivity {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(Login.this);
         SharedPreferences.Editor editor = sharedPref.edit();
 
-        if(sharedPref.getString(TOKEN_KEY, defaultToken) != null)
-        {
-            Intent intent = new Intent(Login.this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
-
-
         LoginButton = (Button) findViewById(R.id.login);
 
         LoginButton.setOnClickListener(new View.OnClickListener() {
@@ -54,9 +46,9 @@ public class Login extends AppCompatActivity {
                 username = (EditText) findViewById(R.id.username);
                 password = (EditText) findViewById(R.id.password);
 
-                String usernameString = username.getText().toString();
-                String passwordString = password.getText().toString();
-
+                String nameString = username.getText().toString();
+                String tempPinInt = password.getText().toString();
+                int passwordPinInt = new Integer(tempPinInt).intValue();
 
                 Gson gson = new GsonBuilder()
                         .setDateFormat("yyyy-MM-dd'T'HH:mm:ssz")
@@ -69,15 +61,12 @@ public class Login extends AppCompatActivity {
 
                 Api apiService = retrofit.create(Api.class);
 
-                LoginData user = new LoginData(usernameString, passwordString);
-                Call<APIToken> call = apiService.loginUser(user);
+                LoginData driver = new LoginData(nameString, passwordPinInt);
+                Call<APIToken> call = apiService.loginUser(driver);
                 call.enqueue(new Callback<APIToken>() {
                     @Override
                     public void onResponse(Call<APIToken> call, Response<APIToken> response) {
-
-                        if(response.isSuccessful())
-                        {
-
+                        if(response.isSuccessful()){
                             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(Login.this);
                             SharedPreferences.Editor editor = sharedPref.edit();
                             editor.putString(TOKEN_KEY, response.body().getToken());
@@ -88,13 +77,9 @@ public class Login extends AppCompatActivity {
                             Intent intent = new Intent(Login.this, MainActivity.class);
                             startActivity(intent);
                             finish();
-                        }
-                        else
-                        {
+                        } else {
                             Toast.makeText(Login.this, "Invalid Credentials, Please try again.", Toast.LENGTH_SHORT).show();
                         }
-
-
                     }
 
                     @Override
