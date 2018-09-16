@@ -1,55 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/login"
-        android:layout_width="252dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="92dp"
-        android:text="Login"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvBusDrivers"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="185dp"
-        android:ems="10"
-        android:hint="PIN"
-        android:inputType="textPassword"
-        android:singleLine="false"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
-
-    <EditText
-        android:id="@+id/username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="262dp"
-        android:ems="10"
-        android:hint="Name"
-        android:inputType="textPersonName"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="253dp"
-        android:layout_height="72dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="18dp"
-        android:text="Forgot Passoword"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textSize="24sp" />
-
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

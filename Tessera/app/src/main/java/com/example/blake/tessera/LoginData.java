@@ -3,34 +3,44 @@ package com.example.blake.tessera;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 public class LoginData {
 
     @SerializedName("name")
     @Expose
-    private String name;
+    private String mName;
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private Integer mId;
 
     public LoginData(String name, Integer id) {
-        this.name = name;
-        this.id = id;
+        mName = name;
+        mId = id;
     }
 
     public String getName() {
-        return name;
+        return mName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        mName = name;
     }
 
     public Integer getId() {
-        return id;
+        return mId;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+       mId = id;
     }
+    public ArrayList<LoginData> idList (int numId) {
+        ArrayList<LoginData> loginUser = new ArrayList<LoginData>();
 
+        for (int i = 1; i <= numId; i++) {
+            loginUser.add(new LoginData(mName, mId));
+        }
+
+        return loginUser;
+    }
 }
