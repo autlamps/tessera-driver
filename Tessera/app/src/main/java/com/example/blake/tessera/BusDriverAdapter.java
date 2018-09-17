@@ -35,15 +35,14 @@ public class BusDriverAdapter extends
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(BusDriverAdapter.ViewHolder viewHolder, int position) {
         LoginData details = mIds.get(position);
 
         // Set item views based on your views and data model
         TextView textView = viewHolder.nameTextView;
-        textView.setText(details);
+        textView.setText(LoginData.getName()); //LoginData.getName()
         Button button = viewHolder.messageButton;
-        button.setText(contact.isOnline() ? "Message" : "Offline");
-        button.setEnabled(contact.isOnline());
+    //    button.setText(LoginData.getId());
     }
 
     @Override

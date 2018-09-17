@@ -43,8 +43,6 @@ public class Login extends AppCompatActivity {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(Login.this);
         SharedPreferences.Editor editor = sharedPref.edit();
 
-        LoginButton = (Button) findViewById(R.id.login);
-
 
         //Recycle View
         RecyclerView rvBusDrivers = (RecyclerView) findViewById(R.id.rvBusDrivers);
@@ -53,7 +51,7 @@ public class Login extends AppCompatActivity {
         theLoginData = LoginData.idList(20);
 
         // Create adapter passing in the sample user data
-        BusDriverAdapter adapter = new BusDriverAdapter(contacts);
+        BusDriverAdapter adapter = new BusDriverAdapter(theLoginData);
 
         // Attach the adapter to the recyclerview to populate items
         rvBusDrivers.setAdapter(adapter);
@@ -63,20 +61,9 @@ public class Login extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-
-
-        LoginButton.setOnClickListener(new View.OnClickListener() {
+    /*    LoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                username = (EditText) findViewById(R.id.username);
-                password = (EditText) findViewById(R.id.password);
 
                 String nameString = username.getText().toString();
                 String tempPinInt = password.getText().toString();
@@ -122,6 +109,6 @@ public class Login extends AppCompatActivity {
                 });
 
             }
-        });
+        });*/
     }
 }

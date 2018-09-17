@@ -9,17 +9,17 @@ public class LoginData {
 
     @SerializedName("name")
     @Expose
-    private String mName;
+    private static String mName;
     @SerializedName("id")
     @Expose
-    private Integer mId;
+    private static Integer mId;
 
     public LoginData(String name, Integer id) {
         mName = name;
         mId = id;
     }
 
-    public String getName() {
+    public static String getName() {
         return mName;
     }
 
@@ -27,14 +27,15 @@ public class LoginData {
         mName = name;
     }
 
-    public Integer getId() {
+    public static Integer getId() {
         return mId;
     }
 
     public void setId(Integer id) {
        mId = id;
     }
-    public ArrayList<LoginData> idList (int numId) {
+
+    public static ArrayList<LoginData> idList (int numId) {
         ArrayList<LoginData> loginUser = new ArrayList<LoginData>();
 
         for (int i = 1; i <= numId; i++) {
