@@ -9,14 +9,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BusDriverAdapter extends
         RecyclerView.Adapter<BusDriverAdapter.ViewHolder> {
 
-        private List<LoginData> mIds;
+        private List<Driver> mIds;
 
-        public BusDriverAdapter(List<LoginData> Ids){
+        public BusDriverAdapter(List<Driver> Ids){
             mIds = Ids;
         }
 
@@ -36,18 +37,22 @@ public class BusDriverAdapter extends
 
     @Override
     public void onBindViewHolder(BusDriverAdapter.ViewHolder viewHolder, int position) {
-        LoginData details = mIds.get(position);
+        Driver details = mIds.get(position);
 
         // Set item views based on your views and data model
         TextView textView = viewHolder.nameTextView;
-        textView.setText(LoginData.getName()); //LoginData.getName()
+        textView.setText(details.getName()); //LoginData.getName()
         Button button = viewHolder.messageButton;
     //    button.setText(LoginData.getId());
     }
 
     @Override
     public int getItemCount() {
-        return mIds.size() + 500;
+       try {
+           return mIds.size();
+       } catch (NullPointerException e) {
+           return 0;
+       }
     }
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
