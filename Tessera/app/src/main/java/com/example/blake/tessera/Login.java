@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -28,6 +31,9 @@ public class Login extends AppCompatActivity {
     public static final String BASE_URL = "https://dev-api.tessera-dev.haydenwoodhead.com/api/";
     public static final String TOKEN_KEY = "token_key";
     private static final String defaultToken = null;
+    private static final int id = 1;
+    private static final int pin = 1234;
+    private Button login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,50 +43,50 @@ public class Login extends AppCompatActivity {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(Login.this);
         SharedPreferences.Editor editor = sharedPref.edit();
 
+        login = (Button) findViewById(R.id.LoginButton);
 
-        //Recycle View
-        RecyclerView rvBusDrivers = (RecyclerView) findViewById(R.id.rvBusDrivers);
-
-        // Initialize contacts
-        //theLoginData = Driver.idList(20);
-
-        // Create adapter passing in the sample user data
-        BusDriverAdapter adapter = new BusDriverAdapter(theLoginData);
-
-        // Attach the adapter to the recyclerview to populate items
-        rvBusDrivers.setAdapter(adapter);
-
-        // Set layout manager to position the items
-        rvBusDrivers.setLayoutManager(new LinearLayoutManager(this));
-
-
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssz").create();
-
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
-
-        Api apiService = retrofit.create(Api.class);
-
-        Call<List<Driver>> call = apiService.driverList();
-
-        call.enqueue(new Callback<List<Driver>>() {
+        login.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onResponse(Call<List<Driver>> call, Response<List<Driver>> response) {
-                if(response.isSuccessful()){
-                  //  SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(Login.this);
-                //    SharedPreferences.Editor editor = sharedPref.edit();
-                   // editor.putString(TOKEN_KEY, response.body().());
-                  //  editor.commit();
+            public void onClick(View view) {
 
-                    Toast.makeText(Login.this, response.body().get(0).toString(), Toast.LENGTH_SHORT).show();
+                Gson gson = new GsonBuilder()
+                        .setDateFormat("yyyy-MM-dd'T'HH:mm:ssz")
+                        .create();
 
-                } else {
-                    Toast.makeText(Login.this, "Invalid Credentials, Please try again.", Toast.LENGTH_SHORT).show();
-                }
-            }
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(BASE_URL)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
 
-            @Override
-            public void onFailure(Call<List<Driver>> call, Throwable t) {
-                Toast.makeText(Login.this,t.getMessage(), Toast.LENGTH_SHORT).show();
+                Api apiService = retrofit.create(Api.class);
+
+                LoginData user = new LoginData(id, pin);
+                Call<APIToken> call = apiService.LoginDriver(user);
+                call.enqueue(new Callback<APIToken>() {
+                    @Override
+                    public void onResponse(Call<APIToken> call, Response<APIToken> response) {
+                        if (response.isSuccessful()) {
+
+                            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(Login.this);
+                            SharedPreferences.Editor editor = sharedPref.edit();
+                            editor.putString(TOKEN_KEY, response.body().getToken());
+                            editor.commit();
+
+                            Toast.makeText(Login.this, response.body().getToken(), Toast.LENGTH_SHORT).show();
+
+                            Intent intent = new Intent(Login.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(Login.this, "Invalid Credentials, Please try again.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<APIToken> call, Throwable t) {
+
+                    }
+                });
             }
         });
     }

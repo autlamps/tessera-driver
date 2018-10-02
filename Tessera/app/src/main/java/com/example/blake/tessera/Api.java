@@ -15,4 +15,7 @@ public interface Api {
 
     @GET("v1/drivers/authtokens/")
     Call<List<Driver>> driverList();
+
+    @POST("v1/drivers/authtokens/")
+    Call<APIToken> LoginDriver(@Body LoginData id);
 }

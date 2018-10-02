@@ -33,6 +33,13 @@
             app:theme="@style/MyActionBar"
             android:id="@+id/hamburger"/>
 
+        <Button
+            android:id="@+id/Scan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="scanCode"
+            android:text="Scan Code" />
+
     </LinearLayout>
 
 </RelativeLayout>

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.ToolbarWidgetWrapper;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.mikepenz.materialdrawer.Drawer;
@@ -16,10 +17,17 @@ import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
+import javax.xml.transform.Result;
+
+import me.dm7.barcodescanner.zxing.ZXingScannerView;
+//import com.google.zxing.Result;
+
 public class MainActivity extends AppCompatActivity {
 
     public static final String TOKEN_KEY = "token_key";
     private static final String defaultToken = null;
+
+    private ZXingScannerView scannerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,5 +100,34 @@ public class MainActivity extends AppCompatActivity {
 
                 ).build();
 
+    }
+
+
+    public void scanCode(View view){
+        scannerView = new ZXingScannerView(this);
+        scannerView.setResultHandler(new ZXingScannerResultHandler());
+
+        setContentView(scannerView);
+        scannerView.startCamera();
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        scannerView.stopCamera();
+    }
+
+    class ZXingScannerResultHandler implements ZXingScannerView.ResultHandler
+    {
+        @Override
+        public void handleResult(com.google.zxing.Result result)
+        {
+            String resultCode = result.getText();
+            Toast.makeText(MainActivity.this, resultCode, Toast.LENGTH_SHORT).show();
+
+            setContentView(R.layout.activity_main);
+            scannerView.stopCamera();
+        }
     }
 }
