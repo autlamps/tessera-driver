@@ -49,14 +49,9 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Gson gson = new GsonBuilder()
-                        .setDateFormat("yyyy-MM-dd'T'HH:mm:ssz")
-                        .create();
+                Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssz").create();
 
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl(BASE_URL)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
+                Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
 
                 Api apiService = retrofit.create(Api.class);
 
@@ -66,7 +61,6 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<APIToken> call, Response<APIToken> response) {
                         if (response.isSuccessful()) {
-
                             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(Login.this);
                             SharedPreferences.Editor editor = sharedPref.edit();
                             editor.putString(TOKEN_KEY, response.body().getToken());
@@ -77,14 +71,14 @@ public class Login extends AppCompatActivity {
                             Intent intent = new Intent(Login.this, MainActivity.class);
                             startActivity(intent);
                             finish();
-                        } else {
+                        }
+                        else {
                             Toast.makeText(Login.this, "Invalid Credentials, Please try again.", Toast.LENGTH_SHORT).show();
                         }
                     }
-
                     @Override
                     public void onFailure(Call<APIToken> call, Throwable t) {
-
+                        //Do Nothing
                     }
                 });
             }

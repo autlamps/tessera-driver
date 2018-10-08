@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class APIToken {
-
     @SerializedName("token")
     @Expose
     private String token;
@@ -16,5 +15,4 @@ public class APIToken {
     public void setToken(String token) {
         this.token = token;
     }
-
 }

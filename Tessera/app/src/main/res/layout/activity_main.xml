@@ -4,7 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@drawable/ic_background_image">
+
+    <Button
+        android:id="@+id/Scan"
+        android:layout_width="177dp"
+        android:layout_height="57dp"
+        android:layout_centerInParent="true"
+        android:onClick="scanCode"
+        android:text="@string/scan_code"
+        android:textColor="#8895B3" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -12,33 +22,33 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="34dp"
-        android:text="Hello World!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/container"/>
+        android:layout_height="468dp" >
+
+    </FrameLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
+        android:orientation="vertical"
+        android:visibility="invisible">
 
         <android.support.v7.widget.Toolbar
+            android:id="@+id/hamburger"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:theme="@style/MyActionBar"
-            android:id="@+id/hamburger"/>
-
-        <Button
-            android:id="@+id/Scan"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="scanCode"
-            android:text="Scan Code" />
+            android:layout_height="67dp"
+            android:background="#00ffffff"
+            app:theme="@style/MyActionBar" />
 
     </LinearLayout>
 

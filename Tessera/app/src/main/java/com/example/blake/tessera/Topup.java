@@ -14,7 +14,6 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 public class Topup extends AppCompatActivity {
-
     public static final String TOKEN_KEY = "token_key";
     private static final String defaultToken = null;
 
@@ -33,58 +32,35 @@ public class Topup extends AppCompatActivity {
         PrimaryDrawerItem item3 = new PrimaryDrawerItem().withIdentifier(3).withName("Settings");
         PrimaryDrawerItem item4 = new PrimaryDrawerItem().withIdentifier(4).withName("Logout");
 
-
-        final Drawer result = new DrawerBuilder()
-                .withActivity(this)
-                .withToolbar(hamburger)
-                .addDrawerItems(
-                        item1,
-                        new DividerDrawerItem(),
-                        item2,
-                        new DividerDrawerItem(),
-                        item3,
-                        new DividerDrawerItem(),
-                        item4
-                )
-                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                @Override
-
-                public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-
-                    if(drawerItem.getIdentifier() == 1)
-                    {
-                        Intent intent = new Intent(Topup.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
-
-                    }
-                    else if(drawerItem.getIdentifier() == 2)
-                    {
-                        //do nothing
-                    }
-                    else if(drawerItem.getIdentifier() == 3)
-                    {
-                        Intent intent = new Intent(Topup.this, settings.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                    else if(drawerItem.getIdentifier() == 4)
-                    {
-                        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(Topup.this);
-                        SharedPreferences.Editor editor = sharedPref.edit();
-                        editor.putString(TOKEN_KEY, null);
-                        editor.commit();
-
-                        Intent intent = new Intent(Topup.this, Login.class);
-                        startActivity(intent);
-                        finish();
-
-                    }
-
-                    return true;
-                    }
+        final Drawer result = new DrawerBuilder().withActivity(this).withToolbar(hamburger).addDrawerItems(item1, new DividerDrawerItem(), item2, new DividerDrawerItem(), item3, new DividerDrawerItem(), item4).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+            @Override
+            public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                if(drawerItem.getIdentifier() == 1) {
+                    Intent intent = new Intent(Topup.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
+                else if(drawerItem.getIdentifier() == 2) {
+                    //do nothing
+                }
+                else if(drawerItem.getIdentifier() == 3) {
+                    Intent intent = new Intent(Topup.this, Settings.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else if(drawerItem.getIdentifier() == 4) {
+                    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(Topup.this);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString(TOKEN_KEY, null);
+                    editor.commit();
 
-                ).build();
+                    Intent intent = new Intent(Topup.this, Login.class);
+                    startActivity(intent);
+                    finish();
+                }
+                return true;
+            }
+        }
+        ).build();
     }
 }

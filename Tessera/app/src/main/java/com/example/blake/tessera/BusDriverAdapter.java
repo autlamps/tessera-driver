@@ -12,11 +12,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BusDriverAdapter extends
-        RecyclerView.Adapter<BusDriverAdapter.ViewHolder> {
-
-        private List<Driver> mIds;
-
+public class BusDriverAdapter extends RecyclerView.Adapter<BusDriverAdapter.ViewHolder> {
+    private List<Driver> mIds;
         public BusDriverAdapter(List<Driver> Ids){
             mIds = Ids;
         }
@@ -38,7 +35,6 @@ public class BusDriverAdapter extends
     @Override
     public void onBindViewHolder(BusDriverAdapter.ViewHolder viewHolder, int position) {
         Driver details = mIds.get(position);
-
         // Set item views based on your views and data model
         TextView textView = viewHolder.nameTextView;
         textView.setText(details.getName()); //LoginData.getName()
@@ -56,13 +52,11 @@ public class BusDriverAdapter extends
     }
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         public TextView nameTextView;
         public Button messageButton;
-
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
         public ViewHolder(View itemView) {
