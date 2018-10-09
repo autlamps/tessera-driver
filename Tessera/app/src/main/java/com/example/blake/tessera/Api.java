@@ -6,6 +6,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public interface Api {
@@ -16,4 +17,7 @@ public interface Api {
 
     @POST("v1/drivers/authtokens/")
     Call<APIToken> LoginDriver(@Body LoginData id);
+
+    @POST("v1/drivers/bttrips/")
+    Call<TagOnReturn> TagOn(@Header("X-DRIVER-TOKEN") String dt, @Body TagOnData tg);
 }

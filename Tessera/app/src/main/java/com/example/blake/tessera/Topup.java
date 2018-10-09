@@ -43,11 +43,6 @@ public class Topup extends AppCompatActivity {
                 else if(drawerItem.getIdentifier() == 2) {
                     //do nothing
                 }
-                else if(drawerItem.getIdentifier() == 3) {
-                    Intent intent = new Intent(Topup.this, Settings.class);
-                    startActivity(intent);
-                    finish();
-                }
                 else if(drawerItem.getIdentifier() == 4) {
                     SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(Topup.this);
                     SharedPreferences.Editor editor = sharedPref.edit();

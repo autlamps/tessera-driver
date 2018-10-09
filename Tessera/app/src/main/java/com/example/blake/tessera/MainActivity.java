@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
@@ -15,19 +17,30 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import static com.example.blake.tessera.Api.BASE_URL;
 //import com.google.zxing.Result;
 
 public class MainActivity extends AppCompatActivity {
     public static final String TOKEN_KEY = "token_key";
     private static final String defaultToken = null;
     private ZXingScannerView scannerView;
+    private String driverToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       android.support.v7.widget.Toolbar hamburger = (android.support.v7.widget.Toolbar) findViewById(R.id.hamburger);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        this.driverToken = sharedPref.getString(TOKEN_KEY, "something else");
+
+        android.support.v7.widget.Toolbar hamburger = (android.support.v7.widget.Toolbar) findViewById(R.id.hamburger);
        hamburger.setBackground(getResources().getDrawable(R.color.colorAccent));
 
        setSupportActionBar(hamburger);
@@ -45,11 +58,6 @@ public class MainActivity extends AppCompatActivity {
             }
             else if(drawerItem.getIdentifier() == 2) {
                 Intent intent = new Intent(MainActivity.this, Topup.class);
-                startActivity(intent);
-                finish();
-            }
-            else if(drawerItem.getIdentifier() == 3) {
-                Intent intent = new Intent(MainActivity.this, Settings.class);
                 startActivity(intent);
                 finish();
             }
@@ -88,10 +96,33 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void handleResult(com.google.zxing.Result result) {
             String resultCode = result.getText();
-            Toast.makeText(MainActivity.this, resultCode, Toast.LENGTH_SHORT).show();
 
             setContentView(R.layout.activity_main);
             scannerView.stopCamera();
+
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssz").create();
+
+            Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
+
+            Api apiService = retrofit.create(Api.class);
+
+            TagOnData tgData = new TagOnData(1, resultCode);
+
+            Call<TagOnReturn> call = apiService.TagOn(driverToken, tgData);
+            call.enqueue(new Callback<TagOnReturn>() {
+                @Override
+                public void onResponse(Call<TagOnReturn> call, Response<TagOnReturn> response) {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(MainActivity.this, "User current bal: " + response.body().getUserCurrentBal(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<TagOnReturn> call, Throwable t) {
+                    Toast.makeText(MainActivity.this, "Failed to talk to server", Toast.LENGTH_SHORT).show();
+                }
+            });
+
         }
     }
 
