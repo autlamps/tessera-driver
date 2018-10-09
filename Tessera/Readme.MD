@@ -8,6 +8,7 @@ Download the repository and open up the project
 Once the project is open plug in the device you want to install the device on and click run.
 choose your device from the list of devices.
 (If your phone does not show go to settings and enable developer options by tapping build number in settings 5 times and in developer options enable usb debugging)
+If camera doesnt work on the app, go to app settting and give the app camera promissions.
 
 
 ## Usage
